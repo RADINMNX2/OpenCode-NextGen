@@ -1,0 +1,6 @@
+- Live browser automation against real web pages, driven by a headless Chromium via Playwright.
+- Use browser_navigate to load a URL, browser_eval to inspect render output and extract interactive selectors, then browser_click / browser_fill to interact.
+- Use browser_screenshot to capture a PNG of the current viewport when you need a visual checkpoint of what the page actually renders.
+- Prefers real-render fidelity over static text retrieval: use these tools when layout, client-side state, or user flows matter and webfetch alone is not enough.
+- Required to work: the optional `playwright-core` dependency and a Chromium install. If the first call errors with a message about the missing dependency, install it with `bun add playwright-core` from `packages/opencode` and run `bunx playwright install chromium`.
+- Browsers keep in-memory session state between calls (cookies, navigations, form input), so sequence interactions step by step.

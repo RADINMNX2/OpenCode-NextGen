@@ -1,0 +1,7 @@
+Searches for code symbols (function and class definitions) using tree-sitter AST-aware parsing.
+
+- When matching files use a bundled grammar (bash, zsh, sh, ps1, psm1), definitions are located by parsing the file with tree-sitter instead of scanning the full text, so results are candidate symbol declarations.
+- Files in other languages are reported as plain text matches, clearly labeled, since no grammar for them is bundled.
+- Returns the symbol kind, name, and line number per definition, grouped by file.
+
+Use this when the goal is to locate definitions, declarations, or exported symbols by name rather than arbitrary text.

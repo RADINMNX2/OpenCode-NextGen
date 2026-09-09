@@ -1,0 +1,274 @@
+/* Tool Card — glassmorphic, color-coded, animated invocation cards */
+
+/* ── Base collapsible ── */
+.tool-card-collapsible {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ── Trigger row ── */
+[data-component="tool-card-trigger"] {
+  content-visibility: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 0;
+  justify-content: flex-start;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface-raised-base, var(--background-base)) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-weak-base) 50%, transparent);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.3s ease;
+
+  &[data-clickable="true"] {
+    cursor: pointer;
+  }
+
+  &:hover {
+    background: color-mix(in srgb, var(--surface-raised-base, var(--background-base)) 85%, transparent);
+    border-color: color-mix(in srgb, var(--border-base) 60%, transparent);
+  }
+}
+
+/* ── Accent glow on hover per category ── */
+.tool-card-collapsible[data-accent="cyan"] [data-component="tool-card-trigger"]:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, #00e5ff 18%, transparent),
+    0 0 12px color-mix(in srgb, #00e5ff 8%, transparent);
+}
+
+.tool-card-collapsible[data-accent="emerald"] [data-component="tool-card-trigger"]:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, #69f0ae 18%, transparent),
+    0 0 12px color-mix(in srgb, #69f0ae 8%, transparent);
+}
+
+.tool-card-collapsible[data-accent="amber"] [data-component="tool-card-trigger"]:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, #ffd740 18%, transparent),
+    0 0 12px color-mix(in srgb, #ffd740 8%, transparent);
+}
+
+.tool-card-collapsible[data-accent="violet"] [data-component="tool-card-trigger"]:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, #b388ff 18%, transparent),
+    0 0 12px color-mix(in srgb, #b388ff 8%, transparent);
+}
+
+.tool-card-collapsible[data-accent="error"] [data-component="tool-card-trigger"]:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, #ff5252 18%, transparent),
+    0 0 12px color-mix(in srgb, #ff5252 8%, transparent);
+}
+
+/* ── Trigger content layout ── */
+[data-slot="tool-card-trigger-content"] {
+  flex: 0 1 auto;
+  width: auto;
+  max-width: calc(100% - 24px);
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 8px;
+}
+
+/* ── Status indicator ── */
+[data-component="tool-card-status"] {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+[data-component="tool-card-status"][data-status="pending"],
+[data-component="tool-card-status"][data-status="running"] {
+  color: var(--text-weak);
+}
+
+[data-component="tool-card-status"][data-status="completed"] {
+  color: #69f0ae;
+}
+
+[data-component="tool-card-status"][data-status="error"] {
+  color: #ff5252;
+}
+
+/* ── Radar spinner for pending/running ── */
+[data-slot="tool-card-status-pending"] {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-component="tool-card-radar"] {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--tool-accent, #00e5ff) 30%, transparent);
+  border-top-color: var(--tool-accent, #00e5ff);
+  animation: tool-radar-spin 1s linear infinite;
+}
+
+/* ── Success checkmark ── */
+[data-slot="tool-card-status-done"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Error icon ── */
+[data-slot="tool-card-status-error"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Info section ── */
+[data-slot="tool-card-info"] {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  font-size: 13px;
+}
+
+[data-slot="tool-card-info-structured"] {
+  flex: 0 1 auto;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+[data-slot="tool-card-info-main"] {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+[data-slot="tool-card-title"] {
+  flex-shrink: 0;
+  font-family: var(--font-family-sans, "Inter", sans-serif);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 530;
+  line-height: 20px;
+  letter-spacing: -0.04px;
+  color: var(--v2-text-text-base, var(--text-strong));
+
+  &.capitalize {
+    text-transform: capitalize;
+  }
+}
+
+[data-slot="tool-card-subtitle"] {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-family-sans, "Inter", sans-serif);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  font-weight: 440;
+  line-height: 20px;
+  letter-spacing: -0.04px;
+  color: var(--v2-text-text-muted, var(--text-base));
+
+  &.clickable {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.15s ease;
+  }
+
+  &.subagent-link {
+    color: var(--text-interactive-base);
+    text-decoration: none;
+    text-underline-offset: 2px;
+    font-weight: var(--font-weight-regular);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+[data-slot="tool-card-arg"] {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-family-sans, "Inter", sans-serif);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  font-weight: 440;
+  line-height: 20px;
+  letter-spacing: -0.04px;
+  color: var(--v2-text-text-muted, var(--text-base));
+}
+
+[data-slot="tool-card-action"] {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Duration counter ── */
+[data-slot="tool-card-duration"] {
+  flex-shrink: 0;
+  font-family: var(--font-family-mono, "JetBrainsMono Nerd Font Mono", monospace);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--v2-text-text-faint, var(--text-weaker));
+  letter-spacing: 0.02em;
+}
+
+/* ── Retry button ── */
+[data-component="tool-card-retry"] {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, #ff5252 30%, transparent);
+  background: color-mix(in srgb, #ff5252 8%, transparent);
+  color: #ff5252;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+  margin-left: auto;
+
+  &:hover {
+    background: color-mix(in srgb, #ff5252 15%, transparent);
+    border-color: color-mix(in srgb, #ff5252 50%, transparent);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+/* ── Content area ── */
+[data-slot="tool-card-content"] {
+  padding-top: 2px;
+  padding-left: 28px;
+}
+
+/* ── Animated height wrapper ── */
+[data-slot="tool-card-content"][data-animated] {
+  will-change: height;
+}

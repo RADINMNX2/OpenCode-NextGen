@@ -1,0 +1,162 @@
+/* Reasoning Card — collapsible chain-of-thought display with gradient border */
+
+/* ── Base ── */
+.reasoning-card-collapsible {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ── Trigger ── */
+[data-component="reasoning-card-trigger"] {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface-raised-base, var(--background-base)) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-weak-base) 40%, transparent);
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Gradient border overlay — violet → cyan */
+[data-component="reasoning-card-trigger"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, #b388ff 35%, transparent),
+    color-mix(in srgb, #00e5ff 35%, transparent)
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+[data-component="reasoning-card-trigger"]:hover::before {
+  opacity: 1;
+}
+
+[data-component="reasoning-card-trigger"]:hover {
+  background: color-mix(in srgb, var(--surface-raised-base, var(--background-base)) 75%, transparent);
+}
+
+/* ── Header layout ── */
+[data-slot="reasoning-card-header"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* ── Brain icon ── */
+[data-component="reasoning-card-icon"] {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reasoning-card-collapsible[data-status="thinking"] [data-component="reasoning-card-icon"] {
+  color: #b388ff;
+}
+
+.reasoning-card-collapsible[data-status="completed"] [data-component="reasoning-card-icon"] {
+  color: #69f0ae;
+}
+
+.reasoning-card-collapsible[data-status="error"] [data-component="reasoning-card-icon"] {
+  color: #ff5252;
+}
+
+[data-slot="reasoning-card-thinking-icon"],
+[data-slot="reasoning-card-done-icon"],
+[data-slot="reasoning-card-error-icon"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Label ── */
+[data-slot="reasoning-card-label"] {
+  font-family: var(--font-family-sans, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 530;
+  line-height: 20px;
+  letter-spacing: -0.04px;
+  color: var(--v2-text-text-base, var(--text-strong));
+  flex-shrink: 0;
+}
+
+/* ── Model name ── */
+[data-slot="reasoning-card-model"] {
+  font-family: var(--font-family-mono, "JetBrainsMono Nerd Font Mono", monospace);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--v2-text-text-faint, var(--text-weaker));
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--surface-inset-base) 60%, transparent);
+  flex-shrink: 0;
+}
+
+/* ── Duration ── */
+[data-slot="reasoning-card-duration"] {
+  font-family: var(--font-family-mono, "JetBrainsMono Nerd Font Mono", monospace);
+  font-size: 11px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  line-height: 16px;
+  color: var(--v2-text-text-faint, var(--text-weaker));
+  letter-spacing: 0.02em;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── Chevron ── */
+[data-slot="reasoning-card-chevron"] {
+  display: inline-flex;
+  align-items: center;
+  color: var(--icon-weaker, var(--text-weaker));
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.reasoning-card-collapsible[data-status="thinking"] [data-slot="reasoning-card-chevron"] {
+  animation: pulse-opacity 2s ease-in-out infinite;
+}
+
+/* ── Content area ── */
+[data-slot="reasoning-card-content"] {
+  padding-top: 2px;
+}
+
+[data-slot="reasoning-card-content"][data-animated] {
+  will-change: height;
+}
+
+/* ── Body ── */
+[data-slot="reasoning-card-body"] {
+  padding: 8px 12px 8px 38px;
+}
+
+[data-slot="reasoning-card-text"] {
+  font-family: var(--font-family-sans, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--v2-text-text-muted, var(--text-base));
+  white-space: pre-wrap;
+  word-break: break-word;
+}

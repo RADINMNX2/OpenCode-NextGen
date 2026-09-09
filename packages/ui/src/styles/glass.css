@@ -1,0 +1,165 @@
+/* Glassmorphism utility classes for the Void design system */
+
+.glass-panel {
+  background: color-mix(in srgb, var(--surface-raised-base) 72%, transparent);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid color-mix(in srgb, var(--border-base) 60%, transparent);
+  border-radius: 12px;
+}
+
+.glass-panel-strong {
+  background: color-mix(in srgb, var(--surface-raised-base) 88%, transparent);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid color-mix(in srgb, var(--border-strong-base) 70%, transparent);
+  border-radius: 12px;
+}
+
+.glass-panel-subtle {
+  background: color-mix(in srgb, var(--surface-inset-base) 60%, transparent);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  border: 1px solid color-mix(in srgb, var(--border-weak-base) 50%, transparent);
+  border-radius: 8px;
+}
+
+/* Neon glow border system — maps to tool categories */
+.glow-border {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--glow-color, var(--info)) 20%, transparent),
+    0 0 12px color-mix(in srgb, var(--glow-color, var(--info)) 10%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 4%, transparent);
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-border-cyan {
+  --glow-color: #00e5ff;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #00e5ff 25%, transparent),
+    0 0 16px color-mix(in srgb, #00e5ff 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 4%, transparent);
+}
+
+.glow-border-emerald {
+  --glow-color: #69f0ae;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #69f0ae 25%, transparent),
+    0 0 16px color-mix(in srgb, #69f0ae 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 4%, transparent);
+}
+
+.glow-border-amber {
+  --glow-color: #ffd740;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #ffd740 25%, transparent),
+    0 0 16px color-mix(in srgb, #ffd740 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 4%, transparent);
+}
+
+.glow-border-violet {
+  --glow-color: #b388ff;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #b388ff 25%, transparent),
+    0 0 16px color-mix(in srgb, #b388ff 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 4%, transparent);
+}
+
+.glow-border-error {
+  --glow-color: #ff5252;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #ff5252 25%, transparent),
+    0 0 16px color-mix(in srgb, #ff5252 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 4%, transparent);
+}
+
+/* Tool category accent colors — used via CSS custom properties */
+.tool-accent-read {
+  --tool-accent: #00e5ff;
+}
+
+.tool-accent-write {
+  --tool-accent: #69f0ae;
+}
+
+.tool-accent-shell {
+  --tool-accent: #ffd740;
+}
+
+.tool-accent-task {
+  --tool-accent: #b388ff;
+}
+
+.tool-accent-error {
+  --tool-accent: #ff5252;
+}
+
+/* Gradient border for reasoning cards */
+.gradient-border {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, #b388ff 40%, transparent),
+    color-mix(in srgb, #00e5ff 40%, transparent)
+  );
+  z-index: -1;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1px;
+}
+
+/* Subtle pulse animation for active tool status */
+@keyframes tool-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--tool-accent, #00e5ff) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--tool-accent, #00e5ff) 15%, transparent);
+  }
+}
+
+.tool-pulse-active {
+  animation: tool-pulse 2s ease-in-out infinite;
+}
+
+/* Radar spin animation for tool execution */
+@keyframes radar-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.tool-radar-spin {
+  animation: radar-spin 1.2s linear infinite;
+}
+
+/* Success checkmark pop-in */
+@keyframes check-pop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.tool-check-pop {
+  animation: check-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Error shake */
+@keyframes error-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-2px); }
+  40%, 80% { transform: translateX(2px); }
+}
+
+.tool-error-shake {
+  animation: error-shake 0.4s ease-in-out;
+}

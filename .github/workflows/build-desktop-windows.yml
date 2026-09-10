@@ -39,8 +39,7 @@ jobs:
 
       - name: Build workspace packages (Turborepo)
         shell: bash
-        run: |
-          bun turbo build --filter=@opencode-ai/desktop... || bun turbo build --filter=@opencode-ai/desktop...
+        run: bun turbo build --filter=!./packages/enterprise --filter=!./packages/storybook
 
       - name: Build desktop application
         run: bun run --cwd packages/desktop build

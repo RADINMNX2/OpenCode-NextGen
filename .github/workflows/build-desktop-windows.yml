@@ -38,7 +38,7 @@ jobs:
         run: bun install
 
       - name: Build workspace packages (Turborepo)
-        run: bun turbo build --filter=@opencode-ai/desktop...
+        run: bun turbo build --filter=!@opencode-ai/enterprise
 
       - name: Build desktop application
         run: bun run --cwd packages/desktop build

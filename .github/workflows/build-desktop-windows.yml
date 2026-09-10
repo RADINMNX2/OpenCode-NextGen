@@ -35,7 +35,7 @@ jobs:
           node-version: 22
 
       - name: Install monorepo dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
       - name: Build workspace packages (Turborepo)
         shell: bash

@@ -1,4 +1,5 @@
-import { createStore, For, Show } from "solid-js"
+import { For, Show } from "solid-js"
+import { createStore } from "solid-js/store"
 import { Icon } from "@opencode-ai/ui/icon"
 import { useLanguage } from "@/context/language"
 

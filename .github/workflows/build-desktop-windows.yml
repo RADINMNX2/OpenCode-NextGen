@@ -39,7 +39,7 @@ jobs:
 
       - name: Build workspace packages (Turborepo)
         shell: bash
-        run: bun turbo build --filter=!./packages/enterprise --filter=!./packages/storybook
+        run: bun turbo build --filter=!./packages/enterprise --filter=!./packages/storybook --filter=!./packages/cli
 
       - name: Build desktop application
         run: bun run --cwd packages/desktop build
